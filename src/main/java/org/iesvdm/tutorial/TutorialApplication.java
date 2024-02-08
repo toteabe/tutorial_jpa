@@ -28,12 +28,42 @@ public class TutorialApplication implements CommandLineRunner {
     @PersistenceContext
     EntityManager entityManager;
 
+
+    public void actualizarPorHijo() {
+
+        Tutorial tutorial = tutorialRepository.findById(1L).orElse(null);
+
+        //Si se utliza un fetch LAZY, mejor estrategia realizar un join fetch en JPQL
+        //y cargar en la colección. NOTA: si utilizas EAGER puedes prescindir de join fetch.
+        List<Comentario> comentarios = entityManager.createQuery(
+                        "select c " +
+                                "from Comentario c " +
+                                "join fetch c.tutorial " +
+                                "where c.tutorial.id = :id", Comentario.class)
+                .setParameter("id", tutorial.getId())
+                .getResultList();
+        tutorial.setComentarios(new HashSet<>(comentarios));
+        //
+
+        tutorial.getComentarios().forEach(System.out::println);
+
+        Comentario comentarioAActualizar = tutorial.getComentarios().stream().findFirst().orElse(null);
+        System.out.println("Comentario a ACTUALIZAR: " + comentarioAActualizar);
+
+        comentarioAActualizar.setTexto("EH!!!!!!");
+
+        comentarioRepository.save(comentarioAActualizar);
+
+
+    }
+
+
     public void actualizarHijoDePadre() {
 
         Tutorial tutorial = tutorialRepository.findById(1L).orElse(null);
 
         //Si se utliza un fetch LAZY, mejor estrategia realizar un join fetch en JPQL
-        //y cargar en la colección
+        //y cargar en la colección. NOTA: si utilizas EAGER puedes prescindir de join fetch.
         List<Comentario> comentarios = entityManager.createQuery(
                         "select c " +
                                 "from Comentario c " +
@@ -55,12 +85,37 @@ public class TutorialApplication implements CommandLineRunner {
 
     }
 
+    public void borrarPorHijo() {
+
+        Tutorial tutorial = tutorialRepository.findById(1L).orElse(null);
+
+        //Si se utliza un fetch LAZY, mejor estrategia realizar un join fetch en JPQL
+        //y cargar en la colección. NOTA: si utilizas EAGER puedes prescindir de join fetch.
+        List<Comentario> comentarios = entityManager.createQuery(
+                        "select c " +
+                                "from Comentario c " +
+                                "join fetch c.tutorial " +
+                                "where c.tutorial.id = :id", Comentario.class)
+                .setParameter("id", tutorial.getId())
+                .getResultList();
+        tutorial.setComentarios(new HashSet<>(comentarios));
+        //
+
+        tutorial.getComentarios().forEach(System.out::println);
+
+        Comentario comentarioABorrar = tutorial.getComentarios().stream().findFirst().orElse(null);
+        System.out.println("Comentario a BORRAR: " + comentarioABorrar);
+
+        comentarioRepository.delete(comentarioABorrar);
+
+    }
+
     public void borrarHijoDePadre() {
 
         Tutorial tutorial = tutorialRepository.findById(1L).orElse(null);
 
         //Si se utlizas un fetch LAZY, mejor estrategia realizar un join fetch en JPQL
-        //y cargar en la colección
+        //y cargar en la colección. NOTA: si utilizas EAGER puedes prescindir de join fetch.
         List<Comentario> comentarios = entityManager.createQuery(
                         "select c " +
                                 "from Comentario c " +
@@ -98,9 +153,12 @@ public class TutorialApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        grabarPadreAHijos();
-        borrarHijoDePadre();
-        actualizarHijoDePadre();
+//        grabarPadreAHijos();
+//        borrarHijoDePadre();
+//        actualizarHijoDePadre();
+//        borrarPorHijo();
+
+//        actualizarPorHijo();
 
     }
 }
