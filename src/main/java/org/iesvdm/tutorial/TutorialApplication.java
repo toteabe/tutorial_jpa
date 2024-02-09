@@ -2,6 +2,7 @@ package org.iesvdm.tutorial;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.iesvdm.tutorial.domain.Comentario;
 import org.iesvdm.tutorial.domain.Tutorial;
 import org.iesvdm.tutorial.repository.ComentarioRepository;
