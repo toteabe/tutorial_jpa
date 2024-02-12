@@ -1,6 +1,8 @@
 package org.iesvdm.tutorial.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +29,7 @@ public class Idioma {
 
     @OneToMany(mappedBy = "idioma", fetch = FetchType.EAGER)
     @JsonIgnore
+    //@JsonManagedReference
     private Set<Pelicula> peliculas = new HashSet<>();
 
 }

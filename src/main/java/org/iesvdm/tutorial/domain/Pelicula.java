@@ -1,5 +1,7 @@
 package org.iesvdm.tutorial.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +23,7 @@ public class Pelicula {
     private String titulo;
 
     @ManyToOne
+    //@JsonBackReference
     private Idioma idioma;
 
 }
