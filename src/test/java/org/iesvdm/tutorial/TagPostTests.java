@@ -8,9 +8,7 @@ import org.iesvdm.tutorial.domain.Tag;
 import org.iesvdm.tutorial.repository.PostRepository;
 import org.iesvdm.tutorial.repository.TagRepository;
 import org.iesvdm.tutorial.util.UtilJPA;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -22,6 +20,7 @@ import java.util.HashSet;
 /**
  *
  */
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class )
 @SpringBootTest
 public class TagPostTests {
 
