@@ -25,7 +25,7 @@ public class Pelicula {
     private String titulo;
 
     @ManyToOne
-    //@JsonBackReference
+//    @JsonManagedReference
     private Idioma idioma;
 
 }
