@@ -14,9 +14,10 @@ public class WebTestClientTests {
     @Test
     public void patchOpReplaceTest() {
 
-        //Utiliza la herramienta
-        //http://jsontostring.
+        //Puedo utilizar la herramienta
+        //http://jsontostring
 
+        //O directamente triple quote de Java moderno
         String body  = """
                 [{
                 	"op": "replace",
@@ -53,7 +54,6 @@ public class WebTestClientTests {
                 .jsonPath("$").isNotEmpty()
                 //.jsonPath("$.nombre").isEqualTo("Italiano");
                 .jsonPath("$.nombre").isEqualTo("Portugués");
-
 
     }
 
