@@ -1,11 +1,10 @@
 package org.iesvdm.tutorial.domain;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.iesvdm.tutorial.serializer.PeliculaSerializer;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +13,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
+        property = "id", scope = Pelicula.class)
+@JsonSerialize(using = PeliculaSerializer.class)
 public class Pelicula {
 
     @Id
@@ -25,7 +25,8 @@ public class Pelicula {
     private String titulo;
 
     @ManyToOne
-//    @JsonManagedReference
+    //@JsonBackReference
+    @ToString.Exclude
     private Idioma idioma;
 
 }

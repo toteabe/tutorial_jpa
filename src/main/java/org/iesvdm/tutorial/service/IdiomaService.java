@@ -2,9 +2,11 @@ package org.iesvdm.tutorial.service;
 
 
 import org.iesvdm.tutorial.domain.Idioma;
+import org.iesvdm.tutorial.domain.Pelicula;
 import org.iesvdm.tutorial.exception.EntityNotFoundException;
 import org.iesvdm.tutorial.exception.NotCouplingIdException;
 import org.iesvdm.tutorial.repository.IdiomaRepository;
+import org.iesvdm.tutorial.repository.PeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +18,28 @@ public class IdiomaService {
     @Autowired
     private IdiomaRepository idiomaRepository;
 
+    @Autowired
+    private PeliculaRepository peliculaRepository;
+
     public List<Idioma> all() {
         return this.idiomaRepository.findAll();
     }
 
     public Idioma save(Idioma idioma) {
-        return this.idiomaRepository.save(idioma);
+        this.idiomaRepository.save(idioma);
+        idioma.getPeliculas().forEach(p -> {
+             this.peliculaRepository.findById(p.getId())
+                     .ifPresentOrElse(pelicula -> {
+                 pelicula.setIdioma(idioma);
+                 this.peliculaRepository.save(pelicula);
+             }, () -> {
+                if (p.getId() == 0) {
+                    p.setIdioma(idioma);
+                    this.peliculaRepository.save(p);
+                }
+             });
+        });
+        return idioma;
     }
 
     public Idioma one(Long id) {
