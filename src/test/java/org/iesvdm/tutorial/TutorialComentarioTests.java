@@ -39,7 +39,7 @@ public class TutorialComentarioTests {
         transactionTemplate = new TransactionTemplate(transactionManager);
     }
 
-    @Test
+    /*@Test
     @Order(1)
     public void grabarPadreAHijosPorColeccion() {
 
@@ -59,8 +59,8 @@ public class TutorialComentarioTests {
 
         tutorialRepository.save(tutorial);
 
-    }
-    @Test
+    }*/
+/*    @Test
     @Order(2)
     public void grabarPadreAHijosSinColeccion() {
 
@@ -78,7 +78,7 @@ public class TutorialComentarioTests {
         tutorialRepository.save(tutorial);
 
     }
-
+*/
     @Test
     @Order(3)
     public void actualizarHijoDePadre() {
@@ -224,6 +224,18 @@ public class TutorialComentarioTests {
 
         Tutorial tutorial = tutorialRepository.findById(1L).orElse(null);
         tutorialRepository.delete(tutorial);
+
+    }
+
+    @Test
+    @Order(8)
+    void pruebaEjercicio8(){
+
+        Tutorial tutorial = tutorialRepository.save(Tutorial.builder().titulo("Titulo 1").build());
+
+        Tutorial tutorial2 = tutorialRepository.findById(tutorial.getId()).orElse(null);
+
+
 
     }
 

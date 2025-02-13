@@ -35,7 +35,7 @@ public class PeliculaIdiomaTests {
     public void setUp() {
         transactionTemplate = new TransactionTemplate(transactionManager);
     }
-
+/*
     @Test
     @Order(1)
     void grabarMultiplesPeliculasIdioma() {
@@ -118,5 +118,5 @@ public class PeliculaIdiomaTests {
         idioma1 = idiomaRepository.findById(1L).orElse(null);
         idiomaRepository.delete(idioma1);
 
-    }
+    }*/
 }

@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.iesvdm.tutorial.serializer.PeliculaSerializer;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,4 +31,10 @@ public class Pelicula {
     @ToString.Exclude
     private Idioma idioma;
 
+    @OneToMany(mappedBy = "pelicula")
+    private Set<PeliculaCategoria> peliculaCategorias;
+/*
+    @ManyToMany
+    private Set<Categoria> categorias; //poner el mapper de categoria
+*/
 }

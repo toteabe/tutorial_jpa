@@ -16,7 +16,7 @@ public class Comentario {
     private long id;
     private String texto;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     //@JoinColumn(name = "tutorial_id",updatable = false)
     @ToString.Exclude
     private Tutorial tutorial;
