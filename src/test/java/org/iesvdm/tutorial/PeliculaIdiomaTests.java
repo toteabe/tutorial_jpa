@@ -22,9 +22,9 @@ import java.util.HashSet;
 public class PeliculaIdiomaTests {
 
     @Autowired
-    IdiomaRepository idiomaRepository;
-    @Autowired
     PeliculaRepository peliculaRepository;
+    @Autowired
+    IdiomaRepository idiomaRepository;
     @PersistenceContext
     EntityManager entityManager;
 
@@ -40,21 +40,34 @@ public class PeliculaIdiomaTests {
     @Order(1)
     void grabarMultiplesPeliculasIdioma() {
 
-        Idioma idioma1 = new Idioma(0, "español", new HashSet<>());
+        Idioma idioma1 = Idioma.builder()
+                .nombre("español")
+                .build();
         idiomaRepository.save(idioma1);
 
-        Pelicula pelicula1 = new Pelicula(0, "Pelicula1", idioma1);
+        Pelicula pelicula1 = Pelicula.builder()
+                .titulo("Pelicula 1")
+                .idioma(idioma1)
+                .build();
         idioma1.getPeliculas().add(pelicula1);
         peliculaRepository.save(pelicula1);
 
-        Pelicula pelicula2 = new Pelicula(0, "Pelicula2", idioma1);
+        Pelicula pelicula2 =  Pelicula.builder()
+                .titulo("Pelicula 2")
+                .idioma(idioma1)
+                .build();
         idioma1.getPeliculas().add(pelicula2);
         peliculaRepository.save(pelicula2);
 
-        Idioma idioma2 = new Idioma(0, "inglés", new HashSet<>());
+        Idioma idioma2 = Idioma.builder()
+                        .nombre("inglés")
+                        .build();
         idiomaRepository.save(idioma2);
 
-        Pelicula pelicula3 = new Pelicula(0, "Pelicula3", idioma2);
+        Pelicula pelicula3 = Pelicula.builder()
+                .titulo("Pelicula 3")
+                .idioma(idioma2)
+                .build();
         idioma2.getPeliculas().add(pelicula3);
         peliculaRepository.save(pelicula3);
 
@@ -64,6 +77,7 @@ public class PeliculaIdiomaTests {
     @Order(2)
     void actualizarIdiomaPeliculaNull() {
 
+        //Desasociar idioma
         Pelicula pelicula1 = peliculaRepository.findById(1L).orElse(null);
         pelicula1.setIdioma(null);
         peliculaRepository.save(pelicula1);
@@ -93,11 +107,12 @@ public class PeliculaIdiomaTests {
     @Test
     @Order(5)
     void eliminarPeliculasAsociadasAIdioma() {
-        
+
         Idioma idioma2 = idiomaRepository.findById(2L).orElse(null);
 
-        idioma2.getPeliculas().forEach(pelicula -> {//pelicula.setIdioma(null);
-                                                    peliculaRepository.delete(pelicula);
+        idioma2.getPeliculas().forEach(pelicula -> { pelicula.setIdioma(null);
+            peliculaRepository.save(pelicula);
+                                                    //peliculaRepository.delete(pelicula);
         });
         //idiomaRepository.delete(idioma2);
 
@@ -115,7 +130,7 @@ public class PeliculaIdiomaTests {
             });
 
             //ESTE 2o FIND HAY QUE HACERLO
-        idioma1 = idiomaRepository.findById(1L).orElse(null);
+        //idioma1 = idiomaRepository.findById(1L).orElse(null);
         idiomaRepository.delete(idioma1);
 
     }

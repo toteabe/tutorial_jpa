@@ -3,22 +3,26 @@ package org.iesvdm.tutorial.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Comentario {
+
+@Entity
+public class Tarjeta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private long id;
-    private String texto;
+    private Long id;
 
-    @ManyToOne(optional = false)
-    //@JoinColumn(name = "tutorial_id",updatable = false)
-    @ToString.Exclude
-    private Tutorial tutorial;
+    private String numero;
+    private LocalDate fechaCaducidad;
+
+    @OneToOne
+    private Socio socio;
 
 }

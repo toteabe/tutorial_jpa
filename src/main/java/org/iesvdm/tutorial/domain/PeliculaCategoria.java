@@ -1,24 +1,29 @@
 package org.iesvdm.tutorial.domain;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Comentario {
+
+@Entity
+public class PeliculaCategoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private long id;
-    private String texto;
+    private Long id;
 
-    @ManyToOne(optional = false)
-    //@JoinColumn(name = "tutorial_id",updatable = false)
+    @ManyToOne
+    private Categoria categoria;
+
+    @ManyToOne
+    //Se rompe el bucle hacia pelicula
     @ToString.Exclude
-    private Tutorial tutorial;
+    private Pelicula pelicula;
 
 }

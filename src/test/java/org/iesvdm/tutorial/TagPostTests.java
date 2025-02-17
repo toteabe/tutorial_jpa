@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
- *
+ * MANYTOMANY CON CASCADE {PERSIST, MERGE} POR LADO PROPIETARIO (LADO COM MAPPEDBY)
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class )
 @SpringBootTest
@@ -115,7 +115,7 @@ public class TagPostTests {
     void desasociarTag() {
 
         Tag tag1 = tagRepository.findById(1L).orElse(null);
-        //Si se utlizas un fetch LAZY, mejor estrategia realizar un join fetch en JPQL
+        //Si se utliza un fetch LAZY, la mejor estrategia es realizar un join fetch en JPQL
         //y cargar en la colección. NOTA: si utilizas EAGER puedes prescindir de join fetch.
 //        List<Post> posts = entityManager.createQuery(
 //                        "select p " +
@@ -135,7 +135,7 @@ public class TagPostTests {
 
         ArrayList<Post> auxCopyPosts = new ArrayList<>(tag1.getPosts());
         auxCopyPosts.forEach(post -> {
-            post.getTags().remove(tag1);
+            //post.getTags().remove(tag1);
             tag1.getPosts().remove(post);
         });
         //SE PUEDE DESVINCULAR EL TAG DEL MANYTOMANY DADO QUE
